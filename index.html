@@ -304,6 +304,145 @@ nav {
     filter: grayscale(100%) contrast(1.2);
 }
 
+/* Slap section */
+#slap {
+    text-align: center;
+}
+
+.slap-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.slap-target {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    border: 3px solid var(--accent);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow);
+}
+
+.slap-target img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.slap-target.slapped img {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    10% { transform: translateX(-10px) rotate(-2deg); }
+    20% { transform: translateX(10px) rotate(2deg); }
+    30% { transform: translateX(-10px) rotate(-1deg); }
+    40% { transform: translateX(10px) rotate(1deg); }
+    50% { transform: translateX(-5px) rotate(-0.5deg); }
+    60% { transform: translateX(5px) rotate(0.5deg); }
+    70% { transform: translateX(-5px) rotate(-0.5deg); }
+    80% { transform: translateX(5px) rotate(0.5deg); }
+    90% { transform: translateX(-2px) rotate(0deg); }
+}
+
+.hand {
+    position: absolute;
+    font-size: 120px;
+    top: 50%;
+    right: -150px;
+    transform: translateY(-50%) rotate(-30deg);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+}
+
+.hand.slapping {
+    animation: slap 0.8s ease-out;
+}
+
+@keyframes slap {
+    0% {
+        right: -150px;
+        opacity: 0;
+        transform: translateY(-50%) rotate(-30deg) scale(1);
+    }
+    40% {
+        right: 50%;
+        opacity: 1;
+        transform: translateY(-50%) translateX(50%) rotate(-10deg) scale(1.2);
+    }
+    50% {
+        right: 50%;
+        opacity: 1;
+        transform: translateY(-50%) translateX(50%) rotate(0deg) scale(1.3);
+    }
+    100% {
+        right: -150px;
+        opacity: 0;
+        transform: translateY(-50%) rotate(30deg) scale(0.8);
+    }
+}
+
+.slap-btn {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #ff0040 0%, #ff4040 100%);
+    border: 3px solid #ff0040;
+    color: white;
+    padding: 20px 60px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    box-shadow: 0 8px 30px rgba(255, 0, 64, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.slap-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.slap-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.slap-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(255, 0, 64, 0.6);
+}
+
+.slap-btn:active {
+    transform: scale(0.95);
+}
+
+.slap-counter {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-top: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
 /* Socials */
 .socials-grid {
     display: grid;
@@ -441,6 +580,15 @@ nav {
         width: 100px;
         height: 100px;
     }
+    
+    .hand {
+        font-size: 80px;
+    }
+    
+    .slap-btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+    }
 }
 
 /* Loading animation */
@@ -463,6 +611,7 @@ nav {
         <nav>
             <button class="tab-btn active" onclick="switchTab('gallery')">ГАЛЕРЕЯ(позор)</button>
             <button class="tab-btn" onclick="switchTab('socials')">СОЦ СЕТИ(докс)</button>
+            <button class="tab-btn" onclick="switchTab('slap')">УДАРИТЬ</button>
         </nav>
         
         <!-- Gallery Tab -->
@@ -472,18 +621,6 @@ nav {
                 <button class="clown-btn" onclick="toggleBW()">🤡</button>
             </div>
             <div class="gallery-grid" id="galleryGrid">
-                <!-- 
-                ===================================
-                ВСТАВЬ СВОИ ФОТО СЮДА
-                ===================================
-                Замени src="https://..." на путь к своим фото
-                Можно использовать:
-                1. Ссылки на фото в интернете (https://...)
-                2. Локальные файлы (./images/photo1.jpg)
-                
-                Примеры как добавлять:
-                -->
-                
                 <div class="gallery-item">
                     <img src="img/photo (1).jpg" alt="Photo 1">
                 </div>
@@ -502,131 +639,109 @@ nav {
                 <div class="gallery-item">
                     <img src="img/photo (6).jpg" alt="Photo 6">
                 </div>
-                                <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="img/photo (7).jpg" alt="Photo 7">
                 </div>
-                                <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="img/photo (8).jpg" alt="Photo 8">
                 </div>
-                                <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="img/photo (9).jpg" alt="Photo 9">
                 </div>
-                                <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="img/photo (10).jpg" alt="Photo 10">
                 </div>
-                
-                                
-               
-               </div>
-                
-                
-                <!-- Добавляй больше фото копируя этот блок:
-                <div class="gallery-item">
-                    <img src="ТВОЯ_ССЫЛКА_СЮДА" alt="Описание фото">
+            </div>
+        </div>
+        
+        <!-- Slap Tab -->
+        <div id="slap" class="tab-content">
+            <div class="slap-container">
+                <div class="slap-target" id="slapTarget">
+                    <img src="img/photo (2).jpg" alt="Target" id="targetImage">
+                    <div class="hand" id="hand">👋</div>
                 </div>
-                -->
+                <button class="slap-btn" onclick="doSlap()">УДАРИТЬ</button>
+                <div class="slap-counter" id="slapCounter">Пощечин: 0</div>
             </div>
         </div>
         
         <!-- Socials Tab -->
         <div id="socials" class="tab-content">
             <div class="socials-grid">
-                <!-- 
-                ===================================
-                НАСТРОЙ СВОИ СОЦ СЕТИ ЗДЕСЬ
-                ===================================
-                Измени:
-                1. Эмодзи в <div class="social-icon">
-                2. Название в <div class="social-name">
-                3. Описание в <div class="social-description">
-                4. Ссылку в href="..."
-                -->
-                
-<div class="social-card">
-    <div class="social-icon">
-        <img src="img/photo (1).jpg" alt="Twitter">
-    </div>
-    <div class="social-name">Tik Tok</div>
-    <div class="social-description">Описание</div>
-    <a href="https://www.tiktok.com/@marvel_smurfs" target="_blank" class="social-link">Перейти</a>
-</div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <img src="img/photo (1).jpg" alt="Twitter">
+                    </div>
+                    <div class="social-name">Tik Tok</div>
+                    <div class="social-description">Описание</div>
+                    <a href="https://www.tiktok.com/@marvel_smurfs" target="_blank" class="social-link">Перейти</a>
+                </div>
                 
                 <div class="social-card">
-                        <div class="social-icon">
-        <img src="img/photo (4).jpg" alt="Twitter">
-    </div>
+                    <div class="social-icon">
+                        <img src="img/photo (4).jpg" alt="Twitter">
+                    </div>
                     <div class="social-name">Instagram</div>
                     <div class="social-description">Визуальная история моей жизни</div>
                     <a href="https://www.instagram.com/demshic_marveel/" target="_blank" class="social-link">Перейти</a>
                 </div>
                 
                 <div class="social-card">
-                        <div class="social-icon">
-        <img src="img/photo (11).jpg" alt="Twitter">
-    </div>
+                    <div class="social-icon">
+                        <img src="img/photo (11).jpg" alt="Twitter">
+                    </div>
                     <div class="social-name">Telegram</div>
                     <div class="social-description">Прямой контакт для общения</div>
                     <a href="https://t.me/DimaMarveel" target="_blank" class="social-link">Перейти</a>
                 </div>
                 
                 <div class="social-card">
-                        <div class="social-icon">
-        <img src="img/photo (12).jpg" alt="Twitter">
-    </div>
+                    <div class="social-icon">
+                        <img src="img/photo (12).jpg" alt="Twitter">
+                    </div>
                     <div class="social-name">Discord</div>
                     <div class="social-description">Игры и общение с друзьями</div>
                     <a href="https://discord.com/users/729661421054591098" target="_blank" class="social-link">Перейти</a>
                 </div>
                 
                 <div class="social-card">
-                        <div class="social-icon">
-        <img src="img/photo (5).jpg" alt="Twitter">
-    </div>
+                    <div class="social-icon">
+                        <img src="img/photo (5).jpg" alt="Twitter">
+                    </div>
                     <div class="social-name">Spotify</div>
                     <div class="social-description">Моя музыка и плейлисты</div>
                     <a href="https://open.spotify.com/user/ew8drm0e0x1mh9bn8bfti6kd3" target="_blank" class="social-link">Перейти</a>
                 </div>
                 
                 <div class="social-card">
-                        <div class="social-icon">
-        <img src="img/photo (7).jpg" alt="Twitter">
-    </div>
+                    <div class="social-icon">
+                        <img src="img/photo (7).jpg" alt="Twitter">
+                    </div>
                     <div class="social-name">YouTube</div>
                     <div class="social-description">Видео контент и стримы</div>
                     <a href="https://www.youtube.com/@Demshicmusic" target="_blank" class="social-link">Перейти</a>
                 </div>
-                
-                <!-- Добавляй больше соц сетей копируя этот блок:
-                <div class="social-card">
-                    <div class="social-icon">😊</div>
-                    <div class="social-name">НАЗВАНИЕ</div>
-                    <div class="social-description">Описание</div>
-                    <a href="ТВОЯ_ССЫЛКА" target="_blank" class="social-link">Перейти</a>
-                </div>
-                -->
             </div>
         </div>
     </div>
     
     <script>
         let isBW = false;
+        let slapCount = 0;
         
         // Switch between tabs
         function switchTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
             
-            // Add active class to clicked button
             event.target.classList.add('active');
         }
         
@@ -643,7 +758,7 @@ nav {
                     } else {
                         item.classList.remove('bw');
                     }
-                }, index * 50); // Staggered animation
+                }, index * 50);
             });
             
             if (isBW) {
@@ -651,6 +766,33 @@ nav {
             } else {
                 ripMessage.classList.remove('show');
             }
+        }
+        
+        // Slap animation
+        function doSlap() {
+            const target = document.getElementById('slapTarget');
+            const hand = document.getElementById('hand');
+            const counter = document.getElementById('slapCounter');
+            
+            // Prevent multiple simultaneous slaps
+            if (hand.classList.contains('slapping')) return;
+            
+            // Add slapping animation
+            hand.classList.add('slapping');
+            target.classList.add('slapped');
+            
+            // Increment counter
+            slapCount++;
+            counter.textContent = `Пощечин: ${slapCount}`;
+            
+            // Remove animation classes after animation completes
+            setTimeout(() => {
+                hand.classList.remove('slapping');
+            }, 800);
+            
+            setTimeout(() => {
+                target.classList.remove('slapped');
+            }, 500);
         }
         
         // Add smooth scroll behavior
